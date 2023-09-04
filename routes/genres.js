@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const Joi = require('joi');
+
 router.use(express.json());
 
 const genres = [
@@ -20,11 +22,18 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    if (!req.body.name || req.body.name.length < 3) {
-        res.status(404).send('Name is required and should be minimum 3 characters!');
+    const schema = {
+        name: Joi.string().min(3).required()
+    }
+    const result = Joi.validate(req.body, schema);
+    console.log(result);
+
+    // Handling request
+    if (result.error) {
+        res.status(404).send(result.error.details[0].message);
         return
     }
-    
+
     // Add request genre to genres array
     const genre = {
         id: genres.length + 1,
