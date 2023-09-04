@@ -20,6 +20,11 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
+    if (!req.body.name || req.body.name.length < 3) {
+        res.status(404).send('Name is required and should be minimum 3 characters!');
+        return
+    }
+    
     // Add request genre to genres array
     const genre = {
         id: genres.length + 1,
