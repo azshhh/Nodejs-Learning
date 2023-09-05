@@ -22,17 +22,10 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const schema = {
-        name: Joi.string().min(3).required()
-    }
-    const result = Joi.validate(req.body, schema);
-    console.log(result);
-
-    // Handling request
-    if (result.error) {
-        res.status(404).send(result.error.details[0].message);
-        return
-    }
+    // Validating req.body input
+    const { error } = validateGenre(req.body);
+    if (error) return res.status(404).send(error.details[0].message);
+    console.log(error.details[0].message);
 
     // Add request genre to genres array
     const genre = {
@@ -45,6 +38,11 @@ router.post('/', (req, res) => {
     res.send(genres);
 });
 
-
+function validateGenre(genre) {
+    const schema = {
+        name: Joi.string().min(3).required()
+    }
+    return Joi.validate(genre, schema);
+}
 
 module.exports = router;
