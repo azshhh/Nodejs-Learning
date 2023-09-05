@@ -1,10 +1,6 @@
+const Joi = require('joi');
 const express = require('express');
 const router = express.Router();
-
-const Joi = require('joi');
-
-router.use(express.json());
-router.use(express.urlencoded({ extended: true }));
 
 const genres = [
     { id: 1, name: 'Action' },
