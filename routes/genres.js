@@ -35,7 +35,7 @@ router.post('/', (req, res) => {
 
     // Push genre to genres
     genres.push(genre);
-    res.send(genres);
+    res.send(genre);
 });
 
 router.put('/:id', (req, res) => {
@@ -51,7 +51,23 @@ router.put('/:id', (req, res) => {
 
     // PUT logic
     genre.name = req.body.name;
-    // send genre
+    // send updated genre
+    res.send(genre);
+});
+
+router.delete('/:id', (req, res) => {
+    // Find genre
+    const genre = genres.find(g => g.id === parseInt(req.params.id));
+    // if not exist - 404
+    if (!genre) return res.status(404).send('Course with given id was not found!');
+
+
+    // we take index of genre
+    const index = genres.indexOf(genre);
+    // we splice out the indexed genre 
+    genres.splice(index, 1);
+
+    // send deleted genre
     res.send(genre);
 });
 
