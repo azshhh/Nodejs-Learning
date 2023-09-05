@@ -1,0 +1,1 @@
+This is how we add static files to node application.
