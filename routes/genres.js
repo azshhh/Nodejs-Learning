@@ -38,6 +38,23 @@ router.post('/', (req, res) => {
     res.send(genres);
 });
 
+router.put('/:id', (req, res) => {
+    // Find genre
+    const genre = genres.find(g => g.id === parseInt(req.params.id));
+    // if not exist - 404
+    if (!genre) return res.status(404).send('Course with given id was not found!');
+
+    // validation
+    const { error } = validateGenre(req.body);
+    // input error - 400
+    if (error) return res.status(404).send(error.details[0].message);
+
+    // PUT logic
+    genre.name = req.body.name;
+    // send genre
+    res.send(genre);
+});
+
 function validateGenre(genre) {
     const schema = {
         name: Joi.string().min(3).required()
