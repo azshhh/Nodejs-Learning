@@ -1,3 +1,4 @@
+const morgan = require('morgan')
 const logger = require('./middleware/logger');
 const genres = require('./routes/genres');
 
@@ -8,6 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(logger);
+app.use(morgan('tiny'));
 app.use('/api/genres', genres);
 
 const port = process.env.PORT || 3000;
