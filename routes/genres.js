@@ -4,6 +4,7 @@ const router = express.Router();
 const Joi = require('joi');
 
 router.use(express.json());
+router.use(express.urlencoded({ extended: true }));
 
 const genres = [
     { id: 1, name: 'Action' },
@@ -25,7 +26,7 @@ router.post('/', (req, res) => {
     // Validating req.body input
     const { error } = validateGenre(req.body);
     if (error) return res.status(404).send(error.details[0].message);
-    console.log(error.details[0].message);
+    // console.log(error.details[0].message);
 
     // Add request genre to genres array
     const genre = {
